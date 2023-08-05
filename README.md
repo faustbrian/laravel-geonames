@@ -28,3 +28,7 @@ $ php artisan vendor:publish --tag="laravel-geonames-config"
 ## Usage
 
 Please review the contents of [our test suite](/tests) for detailed usage examples.
+
+## Credits
+
+This package incorporates elements from [nevadskiy/laravel-geonames](https://github.com/nevadskiy/laravel-geonames). However, modifications have been made to ensure compatibility with this package's database structure. Additionally, support for various other data types has been added.

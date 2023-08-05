@@ -7,7 +7,7 @@ namespace BombenProdukt\GeoNames;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-final class PostalCode extends Model
+final class AlternateName extends Model
 {
     use HasFactory;
 
@@ -23,6 +23,6 @@ final class PostalCode extends Model
      */
     public function getTable(): string
     {
-        return GeoNames::getPostalCodeTableName();
+        return GeoNames::getAlternateNameTableName();
     }
 }

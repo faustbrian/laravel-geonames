@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BombenProdukt\GeoNames;
 
 use BombenProdukt\PackagePowerPack\Package\AbstractServiceProvider;
+use Illuminate\Database\Console\Seeds\SeedCommand;
 use Spatie\LaravelPackageTools\Package;
 
 final class ServiceProvider extends AbstractServiceProvider
@@ -13,7 +14,7 @@ final class ServiceProvider extends AbstractServiceProvider
     {
         parent::configurePackage($package);
 
-        $package->hasCommand(ImportPostalCodes::class);
+        $package->hasCommand(SeedCommand::class);
     }
 
     public function packageRegistered(): void

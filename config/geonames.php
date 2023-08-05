@@ -2,7 +2,187 @@
 
 declare(strict_types=1);
 
+use BombenProdukt\GeoNames\AdministrativeCode;
+use BombenProdukt\GeoNames\AdministrativeCodeSeeder;
+use BombenProdukt\GeoNames\AlternateName;
+use BombenProdukt\GeoNames\AlternateNameSeeder;
+use BombenProdukt\GeoNames\City;
+use BombenProdukt\GeoNames\CitySeeder;
+use BombenProdukt\GeoNames\Continent;
+use BombenProdukt\GeoNames\ContinentSeeder;
+use BombenProdukt\GeoNames\Country;
+use BombenProdukt\GeoNames\CountrySeeder;
+use BombenProdukt\GeoNames\Division;
+use BombenProdukt\GeoNames\DivisionSeeder;
+use BombenProdukt\GeoNames\FeatureCode;
+use BombenProdukt\GeoNames\FeatureCodeSeeder;
+use BombenProdukt\GeoNames\Language;
+use BombenProdukt\GeoNames\LanguageSeeder;
+use BombenProdukt\GeoNames\PostalCode;
+use BombenProdukt\GeoNames\PostalCodeSeeder;
+use BombenProdukt\GeoNames\TimeZone;
+use BombenProdukt\GeoNames\TimeZoneSeeder;
+
 return [
+    /*
+    |--------------------------------------------------------------------------
+    | Directory Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Define the path where Geonames data will be stored temporarily. It uses
+    | Laravel's `storage_path` helper function, which generates a fully qualified
+    | path to a given file relative to the storage directory.
+    |
+    */
+    'directory' => storage_path('tmp/geonames'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Models Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Here you may define the class names for the models used by your
+    | application. This allows for easy reference to model classes
+    | throughout your code.
+    |
+    */
+    'models' => [
+        /*
+        |--------------------------------------------------------------------------
+        | Administrative Code Model
+        |--------------------------------------------------------------------------
+        |
+        | Define the class used for the administrative code model. This class
+        | handles data and operations related to administrative codes.
+        |
+        */
+        'administrative_code' => AdministrativeCode::class,
+
+        /*
+        |--------------------------------------------------------------------------
+        | Alternate Name Model
+        |--------------------------------------------------------------------------
+        |
+        | Define the class used for the alternate name model. This class handles
+        | data and operations related to alternate names.
+        |
+        */
+        'alternate_name' => AlternateName::class,
+
+        /*
+        |--------------------------------------------------------------------------
+        | City Model
+        |--------------------------------------------------------------------------
+        |
+        | Define the class used for the city model. This class handles data
+        | and operations related to cities.
+        |
+        */
+        'city' => City::class,
+
+        /*
+        |--------------------------------------------------------------------------
+        | Continent Model
+        |--------------------------------------------------------------------------
+        |
+        | Define the class used for the continent model. This class handles
+        | data and operations related to continents.
+        |
+        */
+        'continent' => Continent::class,
+
+        /*
+        |--------------------------------------------------------------------------
+        | Country Model
+        |--------------------------------------------------------------------------
+        |
+        | Define the class used for the country model. This class handles
+        | data and operations related to countries.
+        |
+        */
+        'country' => Country::class,
+
+        /*
+        |--------------------------------------------------------------------------
+        | Division Model
+        |--------------------------------------------------------------------------
+        |
+        | Define the class used for the division model. This class handles
+        | data and operations related to divisions.
+        |
+        */
+        'division' => Division::class,
+
+        /*
+        |--------------------------------------------------------------------------
+        | Feature Code Model
+        |--------------------------------------------------------------------------
+        |
+        | Define the class used for the feature code model. This class handles
+        | data and operations related to feature codes.
+        |
+        */
+        'feature_code' => FeatureCode::class,
+
+        /*
+        |--------------------------------------------------------------------------
+        | Language Model
+        |--------------------------------------------------------------------------
+        |
+        | Define the class used for the language model. This class handles
+        | data and operations related to languages.
+        |
+        */
+        'language' => Language::class,
+
+        /*
+        |--------------------------------------------------------------------------
+        | Postal Code Model
+        |--------------------------------------------------------------------------
+        |
+        | Define the class used for the postal code model. This class handles
+        | data and operations related to postal codes.
+        |
+        */
+        'postal_code' => PostalCode::class,
+
+        /*
+        |--------------------------------------------------------------------------
+        | Time Zone Model
+        |--------------------------------------------------------------------------
+        |
+        | Define the class used for the time zone model. This class handles
+        | data and operations related to time zones.
+        |
+        */
+        'time_zone' => TimeZone::class,
+    ],
+    /*
+    |--------------------------------------------------------------------------
+    | Seeders Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Define the list of seeder classes that will be used to populate your
+    | database. Uncomment the seeders that you wish to use. This list will be
+    | processed during the seeding process.
+    |
+    */
+    'seeders' => [
+        // These seeders, being free of dependencies, must run first.
+        AdministrativeCodeSeeder::class,
+        FeatureCodeSeeder::class,
+        LanguageSeeder::class,
+        // These seeders have dependencies and should be run last, in this order.
+        ContinentSeeder::class,
+        CountrySeeder::class,
+        DivisionSeeder::class,
+        CitySeeder::class,
+        TimeZoneSeeder::class,
+        PostalCodeSeeder::class,
+        // This seeder has dependencies and due to the volume of data, it should be run last.
+        AlternateNameSeeder::class,
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Database Tables Configuration
@@ -10,144 +190,259 @@ return [
     |
     | Here you may define the configuration for the database tables used by
     | your application. This allows for easy reference to table names
-    | throughout your code.
+    | throughout your code. Each key is the name used in the code and each
+    | value is the actual name of the table in the database.
     |
     */
     'tables' => [
         /*
         |--------------------------------------------------------------------------
+        | Administrative Codes Table
+        |--------------------------------------------------------------------------
+        |
+        | Define the name for the administrative codes table used to store
+        | administrative code related information.
+        |
+        */
+        'administrative_code' => 'geonames_administrative_codes',
+
+        /*
+        |--------------------------------------------------------------------------
+        | Alternate Names Table
+        |--------------------------------------------------------------------------
+        |
+        | Define the name for the alternate names table used to store alternate
+        | name related information.
+        |
+        */
+        'alternate_name' => 'geonames_alternate_names',
+
+        /*
+        |--------------------------------------------------------------------------
+        | Cities Table
+        |--------------------------------------------------------------------------
+        |
+        | Define the name for the cities table used to store city related information.
+        |
+        */
+        'city' => 'geonames_cities',
+
+        /*
+        |--------------------------------------------------------------------------
+        | Continents Table
+        |--------------------------------------------------------------------------
+        |
+        | Define the name for the continents table used to store continent related
+        | information.
+        |
+        */
+        'continent' => 'geonames_continents',
+
+        /*
+        |--------------------------------------------------------------------------
+        | Countries Table
+        |--------------------------------------------------------------------------
+        |
+        | Define the name for the countries table used to store country related
+        | information.
+        |
+        */
+        'country' => 'geonames_countries',
+
+        /*
+        |--------------------------------------------------------------------------
+        | Divisions Table
+        |--------------------------------------------------------------------------
+        |
+        | Define the name for the divisions table used to store division related
+        | information.
+        |
+        */
+        'division' => 'geonames_divisions',
+
+        /*
+        |--------------------------------------------------------------------------
+        | Feature Codes Table
+        |--------------------------------------------------------------------------
+        |
+        | Define the name for the feature codes table used to store feature code
+        | related information.
+        |
+        */
+        'feature_code' => 'geonames_feature_codes',
+
+        /*
+        |--------------------------------------------------------------------------
+        | Languages Table
+        |--------------------------------------------------------------------------
+        |
+        | Define the name for the languages table used to store language related
+        | information.
+        |
+        */
+        'language' => 'geonames_languages',
+
+        /*
+        |--------------------------------------------------------------------------
         | Postal Codes Table
         |--------------------------------------------------------------------------
         |
-        | Define the name for the postal codes table used to store all postal
-        | code related information.
+        | Define the name for the postal codes table used to store postal code
+        | related information.
         |
         */
-        'postal_codes' => 'postal_codes',
+        'postal_code' => 'geonames_postal_codes',
+
+        /*
+        |--------------------------------------------------------------------------
+        | Time Zones Table
+        |--------------------------------------------------------------------------
+        |
+        | Define the name for the time zones table used to store time zone related
+        | information.
+        |
+        */
+        'time_zone' => 'geonames_time_zones',
     ],
 
     /*
     |--------------------------------------------------------------------------
-    | ZIP Sources Configuration
+    | Data Sources Configuration
     |--------------------------------------------------------------------------
     |
-    | This configuration option defines the URLs from which the ZIP code data
-    | can be downloaded. These sources include data for various countries
-    | and regions, providing comprehensive coverage.
+    | Here you can specify the configuration for the data sources used by
+    | your application. These sources are utilized to populate the geonames
+    | related data for the application.
     |
     */
-    'zip' => [
+    'sources' => [
         /*
         |--------------------------------------------------------------------------
-        | Sources URLs
+        | Cities Data Source
         |--------------------------------------------------------------------------
         |
-        | List of URLs to download ZIP code data. These sources include ZIP code
-        | information for various countries and regions, providing an extensive
-        | and detailed collection of postal code data.
+        | Define the data source for the cities. The numeric values represent the
+        | population threshold for the cities. Only cities with a population above
+        | these thresholds are included in the data.
         |
         */
-        'sources' => [
-            'https://download.geonames.org/export/zip/AD.zip',
-            'https://download.geonames.org/export/zip/AR.zip',
-            'https://download.geonames.org/export/zip/AS.zip',
-            'https://download.geonames.org/export/zip/AT.zip',
-            'https://download.geonames.org/export/zip/AU.zip',
-            'https://download.geonames.org/export/zip/AX.zip',
-            'https://download.geonames.org/export/zip/AZ.zip',
-            'https://download.geonames.org/export/zip/BD.zip',
-            'https://download.geonames.org/export/zip/BE.zip',
-            'https://download.geonames.org/export/zip/BG.zip',
-            'https://download.geonames.org/export/zip/BM.zip',
-            'https://download.geonames.org/export/zip/BR.zip',
-            'https://download.geonames.org/export/zip/BY.zip',
-            'https://download.geonames.org/export/zip/CA.zip',
-            'https://download.geonames.org/export/zip/CA_full.csv.zip',
-            'https://download.geonames.org/export/zip/CH.zip',
-            'https://download.geonames.org/export/zip/CL.zip',
-            'https://download.geonames.org/export/zip/CO.zip',
-            'https://download.geonames.org/export/zip/CR.zip',
-            'https://download.geonames.org/export/zip/CY.zip',
-            'https://download.geonames.org/export/zip/CZ.zip',
-            'https://download.geonames.org/export/zip/DE.zip',
-            'https://download.geonames.org/export/zip/DK.zip',
-            'https://download.geonames.org/export/zip/DO.zip',
-            'https://download.geonames.org/export/zip/DZ.zip',
-            'https://download.geonames.org/export/zip/EE.zip',
-            'https://download.geonames.org/export/zip/ES.zip',
-            'https://download.geonames.org/export/zip/FI.zip',
-            'https://download.geonames.org/export/zip/FM.zip',
-            'https://download.geonames.org/export/zip/FO.zip',
-            'https://download.geonames.org/export/zip/FR.zip',
-            'https://download.geonames.org/export/zip/GB.zip',
-            'https://download.geonames.org/export/zip/GB_full.csv.zip',
-            'https://download.geonames.org/export/zip/GF.zip',
-            'https://download.geonames.org/export/zip/GG.zip',
-            'https://download.geonames.org/export/zip/GL.zip',
-            'https://download.geonames.org/export/zip/GP.zip',
-            'https://download.geonames.org/export/zip/GT.zip',
-            'https://download.geonames.org/export/zip/GU.zip',
-            'https://download.geonames.org/export/zip/HR.zip',
-            'https://download.geonames.org/export/zip/HT.zip',
-            'https://download.geonames.org/export/zip/HU.zip',
-            'https://download.geonames.org/export/zip/IE.zip',
-            'https://download.geonames.org/export/zip/IM.zip',
-            'https://download.geonames.org/export/zip/IN.zip',
-            'https://download.geonames.org/export/zip/IS.zip',
-            'https://download.geonames.org/export/zip/IT.zip',
-            'https://download.geonames.org/export/zip/JE.zip',
-            'https://download.geonames.org/export/zip/JP.zip',
-            'https://download.geonames.org/export/zip/KR.zip',
-            'https://download.geonames.org/export/zip/LI.zip',
-            'https://download.geonames.org/export/zip/LK.zip',
-            'https://download.geonames.org/export/zip/LT.zip',
-            'https://download.geonames.org/export/zip/LU.zip',
-            'https://download.geonames.org/export/zip/LV.zip',
-            'https://download.geonames.org/export/zip/MA.zip',
-            'https://download.geonames.org/export/zip/MC.zip',
-            'https://download.geonames.org/export/zip/MD.zip',
-            'https://download.geonames.org/export/zip/MH.zip',
-            'https://download.geonames.org/export/zip/MK.zip',
-            'https://download.geonames.org/export/zip/MP.zip',
-            'https://download.geonames.org/export/zip/MQ.zip',
-            'https://download.geonames.org/export/zip/MT.zip',
-            'https://download.geonames.org/export/zip/MW.zip',
-            'https://download.geonames.org/export/zip/MX.zip',
-            'https://download.geonames.org/export/zip/MY.zip',
-            'https://download.geonames.org/export/zip/NC.zip',
-            'https://download.geonames.org/export/zip/NL.zip',
-            'https://download.geonames.org/export/zip/NL_full.csv.zip',
-            'https://download.geonames.org/export/zip/NO.zip',
-            'https://download.geonames.org/export/zip/NZ.zip',
-            'https://download.geonames.org/export/zip/PE.zip',
-            'https://download.geonames.org/export/zip/PH.zip',
-            'https://download.geonames.org/export/zip/PK.zip',
-            'https://download.geonames.org/export/zip/PL.zip',
-            'https://download.geonames.org/export/zip/PM.zip',
-            'https://download.geonames.org/export/zip/PR.zip',
-            'https://download.geonames.org/export/zip/PT.zip',
-            'https://download.geonames.org/export/zip/PW.zip',
-            'https://download.geonames.org/export/zip/RE.zip',
-            'https://download.geonames.org/export/zip/RO.zip',
-            'https://download.geonames.org/export/zip/RS.zip',
-            'https://download.geonames.org/export/zip/RU.zip',
-            'https://download.geonames.org/export/zip/SE.zip',
-            'https://download.geonames.org/export/zip/SG.zip',
-            'https://download.geonames.org/export/zip/SI.zip',
-            'https://download.geonames.org/export/zip/SJ.zip',
-            'https://download.geonames.org/export/zip/SK.zip',
-            'https://download.geonames.org/export/zip/SM.zip',
-            'https://download.geonames.org/export/zip/TH.zip',
-            'https://download.geonames.org/export/zip/TR.zip',
-            'https://download.geonames.org/export/zip/UA.zip',
-            'https://download.geonames.org/export/zip/US.zip',
-            'https://download.geonames.org/export/zip/UY.zip',
-            'https://download.geonames.org/export/zip/VA.zip',
-            'https://download.geonames.org/export/zip/VI.zip',
-            'https://download.geonames.org/export/zip/WF.zip',
-            'https://download.geonames.org/export/zip/YT.zip',
-            'https://download.geonames.org/export/zip/ZA.zip',
-            'https://download.geonames.org/export/zip/allCountries.zip',
+        'cities' => [
+            500,
+            1000,
+            5000,
+            15000,
+        ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Postal Codes Data Source
+        |--------------------------------------------------------------------------
+        |
+        | Define the data source for the postal codes. The details of the data source
+        | would be provided here.
+        |
+        */
+        'postal_codes' => [
+            'AD',
+            'AR',
+            'AS',
+            'AT',
+            'AU',
+            'AX',
+            'AZ',
+            'BD',
+            'BE',
+            'BG',
+            'BM',
+            'BR',
+            'BY',
+            'CA',
+            'CA_full.csv',
+            'CH',
+            'CL',
+            'CO',
+            'CR',
+            'CY',
+            'CZ',
+            'DE',
+            'DK',
+            'DO',
+            'DZ',
+            'EE',
+            'ES',
+            'FI',
+            'FM',
+            'FO',
+            'FR',
+            'GB',
+            'GB_full.csv',
+            'GF',
+            'GG',
+            'GL',
+            'GP',
+            'GT',
+            'GU',
+            'HR',
+            'HT',
+            'HU',
+            'IE',
+            'IM',
+            'IN',
+            'IS',
+            'IT',
+            'JE',
+            'JP',
+            'KR',
+            'LI',
+            'LK',
+            'LT',
+            'LU',
+            'LV',
+            'MA',
+            'MC',
+            'MD',
+            'MH',
+            'MK',
+            'MP',
+            'MQ',
+            'MT',
+            'MW',
+            'MX',
+            'MY',
+            'NC',
+            'NL',
+            'NL_full.csv',
+            'NO',
+            'NZ',
+            'PE',
+            'PH',
+            'PK',
+            'PL',
+            'PM',
+            'PR',
+            'PT',
+            'PW',
+            'RE',
+            'RO',
+            'RS',
+            'RU',
+            'SE',
+            'SG',
+            'SI',
+            'SJ',
+            'SK',
+            'SM',
+            'TH',
+            'TR',
+            'UA',
+            'US',
+            'UY',
+            'VA',
+            'VI',
+            'WF',
+            'YT',
+            'ZA',
+            'allCountries',
         ],
     ],
 ];
