@@ -1,0 +1,31 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\\.$#"
+			count: 1
+			path: src/ImportPostalCodes.php
+
+		-
+			message: "#^PHPDoc type string of property BombenProdukt\\\\GeoNames\\\\ImportPostalCodes\\:\\:\\$description is not the same as PHPDoc type string\\|null of overridden property Illuminate\\\\Console\\\\Command\\:\\:\\$description\\.$#"
+			count: 1
+			path: src/ImportPostalCodes.php
+
+		-
+			message: "#^Parameter \\#1 \\$haystack of function str_contains expects string, mixed given\\.$#"
+			count: 1
+			path: src/ImportPostalCodes.php
+
+		-
+			message: "#^Parameter \\#1 \\$path of function basename expects string, mixed given\\.$#"
+			count: 5
+			path: src/ImportPostalCodes.php
+
+		-
+			message: "#^Parameter \\#1 \\$url of static method Illuminate\\\\Support\\\\Facades\\\\Http\\:\\:get\\(\\) expects string, mixed given\\.$#"
+			count: 1
+			path: src/ImportPostalCodes.php
+
+		-
+			message: "#^Part \\$source \\(mixed\\) of encapsed string cannot be cast to string\\.$#"
+			count: 4
+			path: src/ImportPostalCodes.php
